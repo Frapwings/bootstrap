@@ -11,7 +11,13 @@ HR=\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\
 # BUILD DOCS
 #
 
-build:
+components: component.json
+	@component install --dev
+
+node_modules:
+	@npm install .
+
+build: node_modules
 	@echo "\n${HR}"
 	@echo "Building Bootstrap..."
 	@echo "${HR}\n"
@@ -38,6 +44,9 @@ build:
 	@echo "Thanks for using Bootstrap,"
 	@echo "<3 @mdo and @fat\n"
 
+component: components index.js
+	@component build --dev
+
 #
 # RUN JSHINT & QUNIT TESTS IN PHANTOMJS
 #
@@ -63,7 +72,6 @@ clean:
 #
 
 bootstrap: bootstrap-img bootstrap-css bootstrap-js
-
 
 #
 # JS COMPILE
@@ -123,4 +131,4 @@ watch:
 	watchr -e "watch('less/.*\.less') { system 'make' }"
 
 
-.PHONY: docs watch gh-pages bootstrap-img bootstrap-css bootstrap-js
+.PHONY: docs watch gh-pages bootstrap-img bootstrap-css bootstrap-js build components
